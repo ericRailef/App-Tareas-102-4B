@@ -1,0 +1,33 @@
+:root { --verde:#2a9d8f; --verde-osc:#21867a; --crema:#fff8f0; --durazno:#f4a261; --texto:#264653; }
+body { font-family:'Nunito',sans-serif; background:var(--crema); color:var(--texto); }
+h1,h2,h3,h4,.navbar-brand { font-weight:800; }
+main { min-height:70vh; }
+
+/* Colores de Bootstrap reemplazados por la paleta de la veterinaria */
+.bg-success { background-color:var(--verde) !important; }
+.table-success { --bs-table-bg:#d9f0ec; }
+.btn-success { background:var(--verde); border-color:var(--verde); }
+.btn-success:hover { background:var(--verde-osc); border-color:var(--verde-osc); }
+.btn-outline-success { color:var(--verde); border-color:var(--verde); }
+.btn-outline-success:hover { background:var(--verde); border-color:var(--verde); }
+.btn, .card, .alert { border-radius:50rem; }
+.card, .alert { border-radius:1.2rem; }
+.card { border:0; box-shadow:0 6px 20px rgba(38,70,83,.10); overflow:hidden; }
+.form-control, .form-select { border-radius:.8rem; }
+.table { border-radius:1rem; overflow:hidden; box-shadow:0 4px 14px rgba(38,70,83,.08); }
+
+/* Hero con foto */
+.hero { min-height:480px; display:flex; align-items:center; color:#fff; border-radius:1.5rem;
+        background:linear-gradient(90deg,rgba(33,134,122,.88),rgba(33,134,122,.25)),var(--foto) center/cover; }
+.hero h1 { font-size:2.8rem; }
+.btn-calido { background:var(--durazno); color:#fff; font-weight:800; border:0; }
+.btn-calido:hover { background:#e98f45; color:#fff; }
+
+/* Tarjetas de servicios */
+.servicio img { height:200px; object-fit:cover; }
+.servicio:hover { transform:translateY(-4px); transition:.2s; }
+.franja { background:#d9f0ec; border-radius:1.5rem; }
+
+footer { background:var(--texto); color:#dbe7ea; }
+.login-foto { min-height:260px; background:var(--foto) center/cover; }
+@media (max-width:576px) { .hero h1 { font-size:2rem; } .hero { min-height:380px; } }

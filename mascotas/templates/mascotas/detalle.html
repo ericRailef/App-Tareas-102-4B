@@ -1,0 +1,20 @@
+{% extends 'mascotas/base.html' %}
+{% block titulo %}Detalle de {{ mascota.nombre }}{% endblock %}
+
+{% block contenido %}
+<div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-info"><h4 class="mb-0">🐾 {{ mascota.nombre }}</h4></div>
+    <div class="card-body">
+        <p><strong>Especie:</strong> {{ mascota.especie }}</p>
+        <p><strong>Raza:</strong> {{ mascota.raza }}</p>
+        <p><strong>Edad:</strong> {{ mascota.edad }} años</p>
+        <p><strong>Peso:</strong> {{ mascota.peso }} kg</p>
+        <p><strong>Dueño:</strong> {{ mascota.nombre_dueno }}</p>
+        <p><strong>Teléfono:</strong> {{ mascota.telefono_dueno }}</p>
+        <p><strong>Observaciones:</strong> {{ mascota.observaciones|default:"Sin observaciones" }}</p>
+        <p><strong>Fecha de ingreso:</strong> {{ mascota.fecha_ingreso|date:"d/m/Y" }}</p>
+        <a href="{% url 'editar_mascota' mascota.id %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'listar_mascotas' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+{% endblock %}

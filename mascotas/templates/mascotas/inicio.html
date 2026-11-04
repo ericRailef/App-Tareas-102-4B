@@ -1,0 +1,39 @@
+{% extends 'mascotas/base.html' %}
+{% load static %}
+{% block titulo %}Veterinaria Patitas - Cuidamos a tu mejor amigo{% endblock %}
+
+{% block contenido %}
+<section class="hero px-4 px-md-5 mb-5" style="--foto:url('{% static 'mascotas/img/perro.jpg' %}')">
+    <div style="max-width:560px">
+        <h1>Un lugar tranquilo y cariñoso para tu mascota 🐾</h1>
+        <p class="lead">Atención veterinaria con amor, paciencia y todo el tiempo que ellos necesitan.</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'listar_mascotas' %}" class="btn btn-calido btn-lg me-2">Ver mascotas</a>
+            <a href="{% url 'crear_mascota' %}" class="btn btn-light btn-lg">Registrar mascota</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-calido btn-lg">Iniciar sesión</a>
+        {% endif %}
+    </div>
+</section>
+
+<h2 class="text-center mb-4">Nuestros servicios</h2>
+<div class="row g-4 mb-5">
+    <div class="col-md-4"><div class="card servicio h-100">
+        <img src="{% static 'mascotas/img/cachorro.jpg' %}" alt="Cachorro">
+        <div class="card-body"><h4>🩺 Consultas y vacunas</h4><p class="mb-0">Controles de salud, vacunación y desparasitación para cachorros y adultos.</p></div>
+    </div></div>
+    <div class="col-md-4"><div class="card servicio h-100">
+        <img src="{% static 'mascotas/img/gato.jpg' %}" alt="Gato">
+        <div class="card-body"><h4>🐱 Cuidado felino</h4><p class="mb-0">Un ambiente silencioso y sin estrés, pensado para que los gatos se sientan seguros.</p></div>
+    </div></div>
+    <div class="col-md-4"><div class="card servicio h-100">
+        <img src="{% static 'mascotas/img/perro.jpg' %}" alt="Perro">
+        <div class="card-body"><h4>❤️ Fichas de pacientes</h4><p class="mb-0">Registramos a cada mascota y a su familia para conocerlos y cuidarlos mejor.</p></div>
+    </div></div>
+</div>
+
+<section class="franja text-center p-4 p-md-5">
+    <h3>Hoy atendemos a <span style="color:var(--verde)">{{ total }}</span> mascotas registradas</h3>
+    <p class="mb-0">Gracias por confiarnos a tu familia peluda.</p>
+</section>
+{% endblock %}

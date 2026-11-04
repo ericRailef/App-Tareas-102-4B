@@ -1,0 +1,17 @@
+{% extends 'mascotas/base.html' %}
+{% block titulo %}Eliminar mascota{% endblock %}
+
+{% block contenido %}
+<div class="card mx-auto border-danger" style="max-width: 600px;">
+    <div class="card-header bg-danger text-white"><h4 class="mb-0">🗑️ Eliminar mascota</h4></div>
+    <div class="card-body">
+        <p>¿Estás seguro de que quieres eliminar a <strong>{{ mascota.nombre }}</strong>
+           ({{ mascota.especie }}, dueño: {{ mascota.nombre_dueno }})?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <a href="{% url 'listar_mascotas' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
