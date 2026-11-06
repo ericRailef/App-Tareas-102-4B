@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la Tarea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f9;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #1a73e8;
+            margin-top: 0;
+        }
+        .task-detail {
+            margin-bottom: 1.5rem;
+        }
+        .task-detail p {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .badge.completada {
+            background-color: #e6f4ea;
+            color: #137333;
+        }
+        .badge.pendiente {
+            background-color: #fce8e6;
+            color: #c5221f;
+        }
+        .btn {
+            background-color: #1a73e8;
+            color: white;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #1557b0;
+        }
+        .mensaje {
+            text-align: center;
+            color: #666;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Detalle de Tarea</h2>
+    
+    <div id="loading" class="mensaje">Cargando detalles...</div>
+    
+    <div id="detalle-content" style="display: none;">
+        <div class="task-detail">
+            <h3 id="task-titulo" style="color: #202124; margin-bottom: 0.5rem;"></h3>
+            <p><strong>Descripción:</strong></p>
+            <p id="task-descripcion" style="background: #f8f9fa; padding: 0.8rem; border-radius: 6px; color: #5f6368;"></p>
+            <p style="margin-top: 1rem;"><strong>Estado:</strong> <span id="task-estado" class="badge"></span></p>
+        </div>
+        <a href="/" class="btn">Volver al inicio</a>
+    </div>
+
+    <div id="mensaje-error" class="mensaje" style="display: none; color: #d93025;">No se pudo cargar la tarea.</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/login/';
+            return;
+        }
+
+        
+        const pathSegments = window.location.pathname.split('/');
+        const tareaId = pathSegments[pathSegments.length - 2] || pathSegments[pathSegments.length - 1];
+
+        try {
+            const response = await fetch(`/api/v1/tareas/${tareaId}/`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Token ' + token.trim(),
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const tarea = await response.json();
+                document.getElementById('task-titulo').innerText = tarea.titulo;
+                document.getElementById('task-descripcion').innerText = tarea.descripcion || 'Sin descripción';
+                
+                const estadoBadge = document.getElementById('task-estado');
+                if (tarea.completada) {
+                    estadoBadge.innerText = 'Completada';
+                    estadoBadge.className = 'badge completada';
+                } else {
+                    estadoBadge.innerText = 'Pendiente';
+                    estadoBadge.className = 'badge pendiente';
+                }
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('detalle-content').style.display = 'block';
+            } else {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mensaje-error').style.display = 'block';
+            }
+        } catch (error) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('mensaje-error').style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>

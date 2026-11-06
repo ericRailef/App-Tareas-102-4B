@@ -1,23 +1,29 @@
-"""
-URL configuration for tareas project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from tareasapp.views import (
+    TareaViewSet,
+    crear_tarea,
+    detalle_tarea,
+    editar_tarea,
+    eliminar_tarea,
+    inicio,
+    login_pagina,
+    obtain_auth_token_view,
+)
+
+router = DefaultRouter()
+router.register(r"tareas", TareaViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('tareasapp.urls')),
+    path("admin/", admin.site.urls),
+    path("", inicio, name="index"),
+    path("inicio/", inicio, name="inicio"),
+    path("login/", login_pagina, name="login"),
+    path("crear/", crear_tarea, name="crear"),
+    path("detalle/<int:id>/", detalle_tarea, name="detalle"),
+    path("editar/<int:id>/", editar_tarea, name="editar"),
+    path("eliminar/<int:id>/", eliminar_tarea, name="eliminar"),
+    path("api-token-auth/", obtain_auth_token_view, name="api_token_auth"),
+    path("api/v1/", include(router.urls)),
 ]
